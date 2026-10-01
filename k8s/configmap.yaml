@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: docintel-config
+data:
+  # PostgreSQL (with pgvector), Kafka and Ollama are expected as managed or separately deployed services.
+  DB_URL: jdbc:postgresql://postgres.docintel.svc.cluster.local:5432/docintel
+  KAFKA_BOOTSTRAP_SERVERS: kafka.docintel.svc.cluster.local:9092
+  OLLAMA_BASE_URL: http://ollama.docintel.svc.cluster.local:11434
+  OLLAMA_CHAT_MODEL: qwen3.5:4b
+  OLLAMA_EMBEDDING_MODEL: nomic-embed-text

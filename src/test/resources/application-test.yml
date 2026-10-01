@@ -1,0 +1,16 @@
+spring:
+  ai:
+    model:
+      # Replace Ollama with deterministic fakes (see FakeAiConfiguration) so tests are hermetic.
+      chat: none
+      embedding: none
+
+app:
+  chunking:
+    max-chars: 400
+    overlap-chars: 60
+
+logging:
+  level:
+    org.apache.kafka: warn
+    io.github.snipperxx.docintel: debug
