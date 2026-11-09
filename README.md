@@ -105,11 +105,12 @@ Requirements: Docker, and [Ollama](https://ollama.com) on the host.
 ```bash
 ollama pull qwen3.5:4b          # chat model used for extraction and answers
 ollama pull nomic-embed-text    # 768-dimension embedding model
+cp .env.example .env            # then put a key in JWT_SECRET: openssl rand -base64 32
 docker compose up --build
 ```
 
 The API is on <http://localhost:8080>. To develop from an IDE, start only the infrastructure with
-`docker compose up -d postgres kafka` and run `DocumentIntelligenceApplication`.
+`docker compose up -d postgres kafka` and run `DocumentIntelligenceApplication` with `JWT_SECRET` set.
 
 A short session:
 
@@ -140,7 +141,7 @@ curl -X POST localhost:8080/api/ask -H "Authorization: Bearer $TOKEN" \
 | `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama endpoint |
 | `OLLAMA_CHAT_MODEL` | `qwen3.5:4b` | Model for extraction and answers |
 | `OLLAMA_EMBEDDING_MODEL` | `nomic-embed-text` | Must produce 768-dimension vectors (see `V2__vector_store.sql`) |
-| `JWT_SECRET` | development key | Base64 HMAC key, at least 32 bytes. **Set in production** |
+| `JWT_SECRET` | none, required | Base64 HMAC key, at least 32 bytes (`openssl rand -base64 32`) |
 
 ## Tests
 
@@ -183,8 +184,14 @@ src/main/java/io/github/snipperxx/docintel/
 
 ## Limitations and next steps
 
+The planned work is tracked in [ROADMAP.md](ROADMAP.md).
+
 - Transactional outbox instead of after-commit publishing.
 - Dead-letter topic and automatic retries with backoff for transient model failures.
 - Moving units within the tree (path rewrite), and removing memberships.
 - Streaming answers (Server-Sent Events) for `/api/ask`.
 - Refresh tokens and rate limiting on login.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
