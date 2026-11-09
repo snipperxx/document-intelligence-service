@@ -67,8 +67,8 @@ spring:
 
 app:
   jwt:
-    # Development key only. Production must set JWT_SECRET (base64, >= 32 bytes).
-    secret: ${JWT_SECRET:ZGV2LW9ubHktc2VjcmV0LWNoYW5nZS1tZS1pbi1wcm9kdWN0aW9uLTEyMzQ1Ng==}
+    # Required, no default: base64 HMAC key of at least 32 bytes, e.g. `openssl rand -base64 32`.
+    secret: ${JWT_SECRET}
     issuer: docintel
     ttl: 1h
   kafka:

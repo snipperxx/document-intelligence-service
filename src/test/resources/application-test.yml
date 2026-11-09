@@ -6,6 +6,9 @@ spring:
       embedding: none
 
 app:
+  jwt:
+    # Fresh random key per test context (64 hex chars = valid base64, 48 bytes).
+    secret: ${random.value}${random.value}
   chunking:
     max-chars: 400
     overlap-chars: 60
